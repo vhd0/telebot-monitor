@@ -1,6 +1,5 @@
 | Thời gian | Trạng thái | Chi tiết |
 |---|---|---|
-| 2025-07-07 01:11:00 | ✅ Success | 200 OK (Phản hồi: 53171ms) |
 | 2025-07-07 03:10:37 | ✅ Success | 200 OK (Phản hồi: 22521ms) |
 | 2025-07-07 04:07:48 | ❌ Fail | Timeout sau 60s
 ⏰ Timeout sau 90s |
@@ -28,4 +27,6 @@
 | 2025-07-07 13:49:25 | ❌ Fail | Lỗi 429
 ⏰ Timeout sau 90s |
 | 2025-07-07 14:14:58 | ❌ Fail | Lỗi 429
+⏰ Timeout sau 90s |
+| 2025-07-07 14:43:44 | ❌ Fail | Lỗi 429
 ⏰ Timeout sau 90s |
