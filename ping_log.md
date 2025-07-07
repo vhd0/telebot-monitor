@@ -9,3 +9,5 @@
 | 2025-07-07 05:44:28 | ✅ Success | 200 OK (Phản hồi: 297ms) |
 | 2025-07-07 06:23:27 | ✅ Success | 200 OK (Phản hồi: 281ms) |
 | 2025-07-07 06:52:05 | ✅ Success | 200 OK (Phản hồi: 381ms) |
+| 2025-07-07 07:17:58 | ❌ Fail | Timeout sau 60s
+⏰ Timeout sau 90s |
