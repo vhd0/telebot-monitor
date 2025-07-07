@@ -21,3 +21,5 @@
 | 2025-07-07 11:13:19 | ✅ Success | 200 OK (Phản hồi: 339ms) |
 | 2025-07-07 11:37:32 | ❌ Fail | Lỗi 429
 ⏰ Timeout sau 90s |
+| 2025-07-07 12:30:04 | ❌ Fail | Lỗi 429
+⏰ Timeout sau 90s |
