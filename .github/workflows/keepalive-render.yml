@@ -1,0 +1,132 @@
+name: Keep Render Bot Alive
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # Chạy mỗi 30 phút
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+
+    steps:
+      - name: ⬇️ Checkout mã nguồn
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🐍 Thiết lập Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 📦 Cài đặt thư viện
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests matplotlib numpy
+
+      - name: 🚀 Ping endpoint
+        run: |
+          if [ ! -f ping_log.md ]; then
+            echo "| Thời gian | Trạng thái | Chi tiết |" > ping_log.md
+            echo "|---|---|---|" >> ping_log.md
+          fi
+          
+          PING_OUTPUT=$(timeout 90s python ping.py 2>&1 || echo "⏰ Timeout sau 90s")
+          STATUS=$(echo "$PING_OUTPUT" | grep -q "200 OK" && echo "✅ Success" || echo "❌ Fail")
+          
+          echo "| $(date -u '+%Y-%m-%d %H:%M:%S') | $STATUS | $PING_OUTPUT |" >> ping_log.md
+          
+          if [ $(wc -l < ping_log.md) -gt 32 ]; then
+            head -n 2 ping_log.md > ping_log.tmp
+            tail -n 30 ping_log.md >> ping_log.tmp
+            mv ping_log.tmp ping_log.md
+          fi
+
+      - name: 📊 Cập nhật chart và thống kê
+        run: |
+          (head -n 2 ping_log.md && tail -n 30 ping_log.md) > ping_log_short.md
+          tail -n +3 ping_log.md | tail -n 30 > log_for_chart.txt
+          python plot_uptime.py
+
+          TOTAL=$(wc -l < log_for_chart.txt)
+          if [ "$TOTAL" -eq 0 ]; then
+            UPTIME_PERCENT=0
+          else
+            SUCCESS=$(grep -c "✅" log_for_chart.txt)
+            UPTIME_PERCENT=$(awk "BEGIN {printf \"%.2f\", ($SUCCESS/$TOTAL)*100}")
+          fi
+          echo "$UPTIME_PERCENT" > uptime_percent.txt
+
+      - name: 🟢 Tạo badge
+        run: |
+          LAST_STATUS=$(tail -n 1 ping_log.md | grep -q "✅" && echo "Online" || echo "Offline")
+          COLOR=$([ "$LAST_STATUS" = "Online" ] && echo "brightgreen" || echo "red")
+          echo "![Uptime](https://img.shields.io/badge/uptime-$LAST_STATUS-$COLOR)" > uptime_badge.md
+
+      - name: 🔄 Cập nhật README
+        run: |
+          CURRENT_TIME=$(date -u '+%Y-%m-%d %H:%M:%S')
+          TOTAL_PINGS=$(wc -l < log_for_chart.txt)
+          UPTIME_PERCENT=$(cat uptime_percent.txt)
+
+          {
+            echo "<div align=\"center\">"
+            echo
+            echo "# 🚦 Render Service Status"
+            echo
+            echo "<!--badge-start-->"
+            cat uptime_badge.md
+            echo "<!--badge-end-->"
+            echo
+            echo "**Monitoring:** \`telegram-template-bot.onrender.com\`"
+            echo
+            echo "| Metric | Value |"
+            echo "|:--|:--|"
+            echo "| ⏰ Last Update | $CURRENT_TIME UTC |"
+            echo "| 🔄 Total Pings | $TOTAL_PINGS |"
+            echo "| ✅ Uptime (30 lần gần nhất) | $UPTIME_PERCENT% |"
+            echo "| ⌛ Ping Interval | 30 phút |"
+            echo
+            echo "</div>"
+            echo
+            echo "## 📊 Uptime Chart"
+            echo "<!--chart-start-->"
+            echo "![Uptime Chart](uptime_chart.png)"
+            echo "<!--chart-end-->"
+            echo
+            echo "<details><summary>📝 Lịch sử Ping (30 lần gần nhất)</summary>"
+            echo
+            echo "<!--ping-log-start-->"
+            cat ping_log_short.md
+            echo "<!--ping-log-end-->"
+            echo
+            echo "</details>"
+            echo
+            echo "<div align=\"center\">"
+            echo
+            echo "---"
+            echo
+            echo "<sub>⚡️ Powered by [render-monitor](https://github.com/vhd0/render-monitor) | 🕒 Cập nhật mỗi 30 phút</sub>"
+            echo
+            echo "</div>"
+          } > README.md.new
+
+          mv README.md.new README.md
+
+      - name: 💾 Commit thay đổi
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+          git add README.md ping_log.md uptime_badge.md uptime_chart.png
+
+          if ! git diff --staged --quiet; then
+            git commit -m "🤖 Cập nhật uptime [skip ci]" -m "- Thời gian: $(date -u '+%Y-%m-%d %H:%M:%S') UTC" -m "- Badge & Chart đã cập nhật" -m "- Log mới đã thêm"
+            git pull --rebase origin main
+            git push
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
