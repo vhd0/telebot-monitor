@@ -25,3 +25,5 @@
 ⏰ Timeout sau 90s |
 | 2025-07-07 13:10:09 | ❌ Fail | Lỗi 429
 ⏰ Timeout sau 90s |
+| 2025-07-07 13:49:25 | ❌ Fail | Lỗi 429
+⏰ Timeout sau 90s |
