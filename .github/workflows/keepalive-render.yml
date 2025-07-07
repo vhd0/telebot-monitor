@@ -109,7 +109,7 @@ jobs:
             echo
             echo "---"
             echo
-            echo "<sub>⚡️ Powered by [render-monitor](https://github.com/vhd0/render-monitor) | 🕒 Cập nhật mỗi 30 phút</sub>"
+            echo "<sub>⚡️ Powered by [telebot-monitor](https://github.com/vhd0/telebot-monitor) | 🕒 Cập nhật mỗi 30 phút</sub>"
             echo
             echo "</div>"
           } > README.md.new
