@@ -38,6 +38,6 @@
 
 ---
 
-<sub>⚡️ Powered by [render-monitor](https://github.com/vhd0/render-monitor) | 🕒 Cập nhật mỗi 30 phút</sub>
+<sub>⚡️ Powered by [render-monitor](https://github.com/vhd0/telebot-monitor) | 🕒 Cập nhật mỗi 30 phút</sub>
 
 </div>
