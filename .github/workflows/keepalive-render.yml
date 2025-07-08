@@ -90,17 +90,21 @@ jobs:
             echo "| 🔄 Total Pings | $TOTAL_PINGS |"
             echo "| ✅ Uptime (30 lần gần nhất) | $UPTIME_PERCENT% |"
             echo "| ⌛ Ping Interval | 30 phút |"
-            echo "| 📡 Last Check | $LAST_CHECK |"
+            echo "| 📡 Last Check |$LAST_CHECK |"
             echo
             echo "</div>"
             echo
+            echo "<div align=\"center\">"
+            echo
             echo "## 📊 Uptime Chart"
-            echo "<div align=\"center\" style=\"margin: 0 auto; max-width: 800px;\">"
+            echo "<br/>"
             echo "<picture>"
             echo "<source media=\"(prefers-color-scheme: dark)\" srcset=\"uptime_chart.png\">"
             echo "<source media=\"(prefers-color-scheme: light)\" srcset=\"uptime_chart.png\">"
-            echo "<img alt=\"Uptime Chart\" src=\"uptime_chart.png\" style=\"width: 100%; max-width: 800px; height: auto; margin: 10px 0; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);\">"
+            echo "<img alt=\"Uptime Chart\" src=\"uptime_chart.png\" style=\"width: 100%; max-width: 600px; height: auto; margin: 8px auto; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: block;\">"
             echo "</picture>"
+            echo "<br/>"
+            echo
             echo "</div>"
             echo
             echo "<details><summary>📝 Lịch sử Ping (30 lần gần nhất)</summary>"
