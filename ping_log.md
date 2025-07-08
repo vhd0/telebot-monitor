@@ -1,6 +1,5 @@
 | Thời gian | Trạng thái | Chi tiết |
 |---|---|---|
-⏰ Timeout sau 90s |
 | 2025-07-07 17:42:49 | ❌ Fail | Lỗi 429
 ⏰ Timeout sau 90s |
 | 2025-07-07 18:20:30 | ❌ Fail | Lỗi 429
@@ -30,3 +29,4 @@ Service Unavailable (Render đang khởi động lại)
 ⏰ Timeout sau 90s |
 | 2025-07-08 08:16:32 | ✅ Success | 200 OK (Phản hồi: 317ms) |
 | 2025-07-08 08:20:52 | ✅ Success | 200 OK (Phản hồi: 646ms) |
+| 2025-07-08 08:48:51 | ✅ Success | 200 OK (Phản hồi: 336ms) |
