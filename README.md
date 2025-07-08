@@ -3,14 +3,14 @@
 # 🚦 Render Service Status
 
 <!--badge-start-->
-![Uptime](https://img.shields.io/badge/uptime-Offline-red)
+![Uptime](https://img.shields.io/badge/uptime-Online-brightgreen)
 <!--badge-end-->
 
 **Monitoring:** `telegram-template-bot.onrender.com`
 
 | Metric | Value |
 |:--|:--|
-| ⏰ Last Update | 2025-07-07 18:49:37 UTC |
+| ⏰ Last Update | 2025-07-08 00:55:16 UTC |
 | 🔄 Total Pings | 30 |
 | ✅ Uptime (30 lần gần nhất) | 6.67% |
 | ⌛ Ping Interval | 30 phút |
@@ -27,7 +27,6 @@
 <!--ping-log-start-->
 | Thời gian | Trạng thái | Chi tiết |
 |---|---|---|
-| 2025-07-07 10:46:02 | ✅ Success | 200 OK (Phản hồi: 777ms) |
 | 2025-07-07 11:13:19 | ✅ Success | 200 OK (Phản hồi: 339ms) |
 | 2025-07-07 11:37:32 | ❌ Fail | Lỗi 429
 ⏰ Timeout sau 90s |
@@ -57,6 +56,7 @@
 ⏰ Timeout sau 90s |
 | 2025-07-07 18:49:33 | ❌ Fail | Lỗi 429
 ⏰ Timeout sau 90s |
+| 2025-07-08 00:55:14 | ✅ Success | 200 OK (Phản hồi: 388ms) |
 <!--ping-log-end-->
 
 </details>
