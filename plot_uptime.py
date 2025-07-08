@@ -19,20 +19,16 @@ if times:
     x = np.arange(len(times))
     y = np.array(statuses)
 
-    # Thiết lập style cho matplotlib
     plt.style.use('seaborn-v0_8-darkgrid')
     
-    fig, ax = plt.subplots(figsize=(14, 4))
+    fig, ax = plt.subplots(figsize=(16, 5))
 
-    # Bar colors
     colors = ['#2ecc40' if s == 1 else '#ff4136' for s in y]
     bars = ax.bar(x, y, color=colors, edgecolor='#222', width=0.7, zorder=3)
 
-    # Markers
     for i in range(len(x)):
         ax.scatter(x[i], y[i], s=150, color=colors[i], edgecolor='#222', linewidth=1.8, zorder=4)
 
-    # Find and annotate downtime streaks
     streaks = []
     start = None
     for i, s in enumerate(y):
@@ -59,14 +55,12 @@ if times:
             )
             ax.axvspan(s-0.35, e+0.35, ymin=0, ymax=0.16, color='#ff4136', alpha=0.13, zorder=1)
 
-    # Background and grid
     ax.set_facecolor('#f6fafd')
     fig.patch.set_facecolor('#f6fafd')
     ax.axhspan(-0.1, 0.5, facecolor='#ffe8e8', alpha=0.09, zorder=0)
     ax.axhspan(0.5, 1.1, facecolor='#e8ffe9', alpha=0.06, zorder=0)
     ax.grid(axis='y', linestyle=':', alpha=0.19, zorder=1)
 
-    # Axes and ticks
     ax.set_ylim(-0.1, 1.1)
     ax.set_yticks([0, 1])
     ax.set_yticklabels(['DOWN', 'UP'], fontsize=12, weight='bold')
@@ -75,28 +69,25 @@ if times:
     ax.set_xticklabels([times[i] for i in range(0, len(times), xtickstep)], 
                        fontsize=9, rotation=38, ha='right')
 
-    # Legend
     green_patch = mpatches.Patch(color='#2ecc40', label='Uptime', alpha=0.7)
     red_patch = mpatches.Patch(color='#ff4136', label='Downtime', alpha=0.7)
     ax.legend(handles=[green_patch, red_patch], loc='upper left', fontsize=11, frameon=True)
 
-    # Title
     ax.set_title('Uptime/Downtime Monitor (30min interval)', 
                 fontsize=16, weight='bold', pad=14, color='#222')
 
-    # Optimize UI
     for spine in ['top', 'right']:
         ax.spines[spine].set_visible(False)
     ax.spines['left'].set_linewidth(1.1)
     ax.spines['bottom'].set_linewidth(1.1)
 
-    # Set DPI and figure size
-    plt.tight_layout(pad=1.5)
+    plt.tight_layout(pad=2.0, h_pad=1.0, w_pad=1.0)
     
-    # Save with specific font configuration
     plt.rcParams['font.family'] = 'DejaVu Sans'
     plt.savefig('uptime_chart.png', 
-                dpi=140, 
-                bbox_inches='tight', 
-                transparent=False)
+                dpi=150,
+                bbox_inches='tight',
+                transparent=False,
+                format='png',
+                metadata={'Author': 'GitHub Actions'})
     plt.close()
