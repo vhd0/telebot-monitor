@@ -21,13 +21,23 @@ if times:
 
     plt.style.use('seaborn-v0_8-darkgrid')
     
-    fig, ax = plt.subplots(figsize=(16, 5))
+    # Điều chỉnh kích thước chart nhỏ hơn
+    fig, ax = plt.subplots(figsize=(12, 4))
 
     colors = ['#2ecc40' if s == 1 else '#ff4136' for s in y]
     bars = ax.bar(x, y, color=colors, edgecolor='#222', width=0.7, zorder=3)
 
-    for i in range(len(x)):
-        ax.scatter(x[i], y[i], s=150, color=colors[i], edgecolor='#222', linewidth=1.8, zorder=4)
+    # Đánh dấu điểm cuối cùng để dễ nhận biết
+    last_x = len(x) - 1
+    last_color = colors[last_x]
+    ax.scatter(last_x, y[last_x], s=200, color=last_color, 
+              edgecolor='#222', linewidth=2, zorder=5,
+              marker='*')  # Dùng dấu sao cho điểm cuối
+
+    # Các điểm còn lại nhỏ hơn
+    for i in range(len(x)-1):
+        ax.scatter(i, y[i], s=100, color=colors[i], 
+                  edgecolor='#222', linewidth=1.5, zorder=4)
 
     streaks = []
     start = None
@@ -46,14 +56,16 @@ if times:
             downtime_mins = count * 30
             x_mid = (s + e) / 2
             ax.annotate(
-                f"{downtime_mins} mins downtime\n({count} fails)",
+                f"{downtime_mins}m down\n({count} fails)",
                 xy=(x_mid, 0.1), xycoords='data',
-                xytext=(0, 28), textcoords='offset points',
+                xytext=(0, 25), textcoords='offset points',
                 ha='center', va='bottom',
-                fontsize=10, color='#b22222', weight='bold',
-                bbox=dict(boxstyle='round,pad=0.32', fc='#fff0f0', ec='#ff4136', lw=1.2, alpha=0.88)
+                fontsize=9, color='#b22222', weight='bold',
+                bbox=dict(boxstyle='round,pad=0.2', fc='#fff0f0', 
+                         ec='#ff4136', lw=1, alpha=0.88)
             )
-            ax.axvspan(s-0.35, e+0.35, ymin=0, ymax=0.16, color='#ff4136', alpha=0.13, zorder=1)
+            ax.axvspan(s-0.35, e+0.35, ymin=0, ymax=0.16, 
+                      color='#ff4136', alpha=0.13, zorder=1)
 
     ax.set_facecolor('#f6fafd')
     fig.patch.set_facecolor('#f6fafd')
@@ -63,25 +75,32 @@ if times:
 
     ax.set_ylim(-0.1, 1.1)
     ax.set_yticks([0, 1])
-    ax.set_yticklabels(['DOWN', 'UP'], fontsize=12, weight='bold')
-    xtickstep = max(1, len(x)//10)
-    ax.set_xticks(x[::xtickstep])
-    ax.set_xticklabels([times[i] for i in range(0, len(times), xtickstep)], 
-                       fontsize=9, rotation=38, ha='right')
+    ax.set_yticklabels(['DOWN', 'UP'], fontsize=10, weight='bold')
+    
+    # Hiển thị ít nhãn thời gian hơn, tập trung vào điểm cuối
+    num_ticks = min(6, len(x))  # Tối đa 6 nhãn
+    tick_positions = np.linspace(0, len(x)-1, num_ticks, dtype=int)
+    ax.set_xticks(tick_positions)
+    tick_labels = [times[i] for i in tick_positions]
+    ax.set_xticklabels(tick_labels, fontsize=8, rotation=30, ha='right')
 
     green_patch = mpatches.Patch(color='#2ecc40', label='Uptime', alpha=0.7)
     red_patch = mpatches.Patch(color='#ff4136', label='Downtime', alpha=0.7)
-    ax.legend(handles=[green_patch, red_patch], loc='upper left', fontsize=11, frameon=True)
+    star_marker = plt.Line2D([], [], color='black', marker='*', 
+                            linestyle='None', markersize=10, 
+                            label='Latest Check', markerfacecolor='grey')
+    ax.legend(handles=[green_patch, red_patch, star_marker], 
+             loc='upper left', fontsize=9, frameon=True)
 
-    ax.set_title('Uptime/Downtime Monitor (30min interval)', 
-                fontsize=16, weight='bold', pad=14, color='#222')
+    ax.set_title('Uptime Monitor (30min interval)', 
+                fontsize=12, weight='bold', pad=10, color='#222')
 
     for spine in ['top', 'right']:
         ax.spines[spine].set_visible(False)
-    ax.spines['left'].set_linewidth(1.1)
-    ax.spines['bottom'].set_linewidth(1.1)
+    ax.spines['left'].set_linewidth(1)
+    ax.spines['bottom'].set_linewidth(1)
 
-    plt.tight_layout(pad=2.0, h_pad=1.0, w_pad=1.0)
+    plt.tight_layout(pad=1.5)
     
     plt.rcParams['font.family'] = 'DejaVu Sans'
     plt.savefig('uptime_chart.png', 
