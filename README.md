@@ -3,31 +3,35 @@
 # 🚦 Render Service Status
 
 <!--badge-start-->
-![Uptime](https://img.shields.io/badge/uptime-Offline-red)
+![Uptime](https://img.shields.io/badge/uptime-Online-brightgreen)
 <!--badge-end-->
 
 **Monitoring:** `telegram-template-bot.onrender.com`
 
 | Metric | Value |
 |:--|:--|
-| ⏰ Last Update | 2025-07-08 04:49:45 UTC |
+| ⏰ Last Update | 2025-07-08 04:56:23 UTC |
 | 🔄 Total Pings | 30 |
-| ✅ Uptime (30 lần gần nhất) | 10.00% |
+| ✅ Uptime (30 lần gần nhất) | 13.33% |
 | ⌛ Ping Interval | 30 phút |
+| 📡 Last Check |  2025-07-08 04:56:21 | ✅ Success  |
 
 </div>
 
 ## 📊 Uptime Chart
-<!--chart-start-->
-![Uptime Chart](uptime_chart.png)
-<!--chart-end-->
+<div align="center" style="margin: 0 auto; max-width: 800px;">
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="uptime_chart.png">
+<source media="(prefers-color-scheme: light)" srcset="uptime_chart.png">
+<img alt="Uptime Chart" src="uptime_chart.png" style="width: 100%; max-width: 800px; height: auto; margin: 10px 0; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+</picture>
+</div>
 
 <details><summary>📝 Lịch sử Ping (30 lần gần nhất)</summary>
 
 <!--ping-log-start-->
 | Thời gian | Trạng thái | Chi tiết |
 |---|---|---|
-⏰ Timeout sau 90s |
 | 2025-07-07 13:49:25 | ❌ Fail | Lỗi 429
 ⏰ Timeout sau 90s |
 | 2025-07-07 14:14:58 | ❌ Fail | Lỗi 429
@@ -57,6 +61,7 @@
 | 2025-07-08 04:02:41 | ✅ Success | 200 OK (Phản hồi: 370ms) |
 | 2025-07-08 04:49:43 | ❌ Fail | Lỗi 503
 ⏰ Timeout sau 90s |
+| 2025-07-08 04:56:21 | ✅ Success | 200 OK (Phản hồi: 714ms) |
 <!--ping-log-end-->
 
 </details>
