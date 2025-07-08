@@ -1,9 +1,5 @@
 | Thời gian | Trạng thái | Chi tiết |
 |---|---|---|
-⏰ Timeout sau 90s |
-| 2025-07-08 05:43:59 | ✅ Success | 200 OK (Phản hồi: 729ms) |
-| 2025-07-08 06:22:25 | ✅ Success | 200 OK (Phản hồi: 271ms) |
-| 2025-07-08 06:51:05 | ✅ Success | 200 OK (Phản hồi: 318ms) |
 | 2025-07-08 07:15:59 | ❌ Fail | Lỗi 503
 ⏰ Timeout sau 90s |
 | 2025-07-08 07:40:24 | ❌ Fail | Lỗi 503
@@ -30,3 +26,7 @@ Service Unavailable (Render đang khởi động lại) (Thử lại 3/5), đợ
 | 2025-07-08 14:43:28 | ✅ Success | 200 OK (Phản hồi: 333ms) |
 | 2025-07-08 15:15:51 | ✅ Success | 200 OK (Phản hồi: 381ms) |
 | 2025-07-08 15:42:30 | ✅ Success | 200 OK (Phản hồi: 380ms) |
+| 2025-07-08 16:19:32 | ✅ Success | Service Unavailable (Render đang khởi động lại) (Thử lại 1/5), đợi 8s...
+Service Unavailable (Render đang khởi động lại) (Thử lại 2/5), đợi 11s...
+Service Unavailable (Render đang khởi động lại) (Thử lại 3/5), đợi 17s...
+200 OK (Khởi động thành công sau 4 lần thử, phản hồi: 37267ms) |
