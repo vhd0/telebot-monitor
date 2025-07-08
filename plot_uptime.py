@@ -6,107 +6,83 @@ import re
 with open('log_for_chart.txt', encoding='utf-8') as f:
     lines = f.readlines()
 
-times = []
-statuses = []
-
-for line in lines:
-    match = re.match(r'\|\s*(.*?)\s*\|\s*(.*?)\s*\|', line)
-    if match:
-        times.append(match.group(1))
-        statuses.append(1 if '✅' in match.group(2) else 0)
-
 if times:
     x = np.arange(len(times))
     y = np.array(statuses)
 
     plt.style.use('seaborn-v0_8-darkgrid')
     
-    # Điều chỉnh kích thước chart nhỏ hơn
-    fig, ax = plt.subplots(figsize=(12, 4))
+    # Giảm kích thước chart
+    fig, ax = plt.subplots(figsize=(10, 3))  # Thu nhỏ kích thước
 
     colors = ['#2ecc40' if s == 1 else '#ff4136' for s in y]
     bars = ax.bar(x, y, color=colors, edgecolor='#222', width=0.7, zorder=3)
 
-    # Đánh dấu điểm cuối cùng để dễ nhận biết
-    last_x = len(x) - 1
-    last_color = colors[last_x]
-    ax.scatter(last_x, y[last_x], s=200, color=last_color, 
-              edgecolor='#222', linewidth=2, zorder=5,
-              marker='*')  # Dùng dấu sao cho điểm cuối
+    # Thu nhỏ điểm đánh dấu
+    for i in range(len(x)):
+        marker = '*' if i == len(x)-1 else 'o'  # Dấu sao cho điểm cuối
+        size = 120 if i == len(x)-1 else 80     # Điểm cuối lớn hơn
+        ax.scatter(i, y[i], s=size, color=colors[i], 
+                  edgecolor='#222', linewidth=1.5, zorder=4,
+                  marker=marker)
 
-    # Các điểm còn lại nhỏ hơn
-    for i in range(len(x)-1):
-        ax.scatter(i, y[i], s=100, color=colors[i], 
-                  edgecolor='#222', linewidth=1.5, zorder=4)
-
-    streaks = []
-    start = None
-    for i, s in enumerate(y):
-        if s == 0 and start is None:
-            start = i
-        if s == 1 and start is not None:
-            streaks.append((start, i - 1))
-            start = None
-    if start is not None:
-        streaks.append((start, len(y) - 1))
-
+    # Thu gọn annotation cho các đợt downtime
     for s, e in streaks:
         count = e - s + 1
         if count > 0:
             downtime_mins = count * 30
             x_mid = (s + e) / 2
+            # Thu gọn text và giảm kích thước
             ax.annotate(
-                f"{downtime_mins}m down\n({count} fails)",
+                f"{count}x ({downtime_mins}m)",  # Thu gọn text
                 xy=(x_mid, 0.1), xycoords='data',
-                xytext=(0, 25), textcoords='offset points',
+                xytext=(0, 20), textcoords='offset points',  # Giảm offset
                 ha='center', va='bottom',
-                fontsize=9, color='#b22222', weight='bold',
-                bbox=dict(boxstyle='round,pad=0.2', fc='#fff0f0', 
-                         ec='#ff4136', lw=1, alpha=0.88)
+                fontsize=8, color='#b22222',  # Giảm font size
+                bbox=dict(boxstyle='round,pad=0.2', 
+                         fc='#fff0f0', ec='#ff4136', 
+                         lw=1, alpha=0.88)
             )
             ax.axvspan(s-0.35, e+0.35, ymin=0, ymax=0.16, 
                       color='#ff4136', alpha=0.13, zorder=1)
 
+    # Tối ưu hiển thị grid và background
     ax.set_facecolor('#f6fafd')
     fig.patch.set_facecolor('#f6fafd')
-    ax.axhspan(-0.1, 0.5, facecolor='#ffe8e8', alpha=0.09, zorder=0)
-    ax.axhspan(0.5, 1.1, facecolor='#e8ffe9', alpha=0.06, zorder=0)
-    ax.grid(axis='y', linestyle=':', alpha=0.19, zorder=1)
+    ax.grid(axis='y', linestyle=':', alpha=0.15, zorder=1)
 
+    # Tối ưu các label
     ax.set_ylim(-0.1, 1.1)
     ax.set_yticks([0, 1])
-    ax.set_yticklabels(['DOWN', 'UP'], fontsize=10, weight='bold')
+    ax.set_yticklabels(['DOWN', 'UP'], fontsize=9)
     
-    # Hiển thị ít nhãn thời gian hơn, tập trung vào điểm cuối
-    num_ticks = min(6, len(x))  # Tối đa 6 nhãn
+    # Hiển thị ít nhãn thời gian hơn
+    num_ticks = min(5, len(x))  # Giảm số lượng nhãn
     tick_positions = np.linspace(0, len(x)-1, num_ticks, dtype=int)
     ax.set_xticks(tick_positions)
-    tick_labels = [times[i] for i in tick_positions]
-    ax.set_xticklabels(tick_labels, fontsize=8, rotation=30, ha='right')
+    tick_labels = [times[i].split()[1] for i in tick_positions]  # Chỉ hiển thị giờ:phút
+    ax.set_xticklabels(tick_labels, fontsize=8, rotation=0)  # Bỏ rotation
 
-    green_patch = mpatches.Patch(color='#2ecc40', label='Uptime', alpha=0.7)
-    red_patch = mpatches.Patch(color='#ff4136', label='Downtime', alpha=0.7)
-    star_marker = plt.Line2D([], [], color='black', marker='*', 
-                            linestyle='None', markersize=10, 
-                            label='Latest Check', markerfacecolor='grey')
-    ax.legend(handles=[green_patch, red_patch, star_marker], 
-             loc='upper left', fontsize=9, frameon=True)
+    # Thu gọn legend
+    green_patch = mpatches.Patch(color='#2ecc40', label='Up', alpha=0.7)
+    red_patch = mpatches.Patch(color='#ff4136', label='Down', alpha=0.7)
+    star = plt.Line2D([], [], color='black', marker='*', 
+                      linestyle='None', markersize=8, 
+                      label='Latest', markerfacecolor='grey')
+    ax.legend(handles=[green_patch, red_patch, star], 
+             loc='upper left', fontsize=8, frameon=True,
+             ncol=3)  # Hiển thị legend trên một hàng
 
-    ax.set_title('Uptime Monitor (30min interval)', 
-                fontsize=12, weight='bold', pad=10, color='#222')
+    # Thu gọn title
+    ax.set_title('Uptime Monitor (30m)', 
+                fontsize=10, pad=8, color='#222')
 
-    for spine in ['top', 'right']:
-        ax.spines[spine].set_visible(False)
-    ax.spines['left'].set_linewidth(1)
-    ax.spines['bottom'].set_linewidth(1)
-
-    plt.tight_layout(pad=1.5)
+    # Tối ưu spacing
+    plt.tight_layout(pad=1.0)
     
-    plt.rcParams['font.family'] = 'DejaVu Sans'
+    # Lưu với DPI phù hợp
     plt.savefig('uptime_chart.png', 
-                dpi=150,
+                dpi=120,  # Giảm DPI
                 bbox_inches='tight',
-                transparent=False,
-                format='png',
-                metadata={'Author': 'GitHub Actions'})
+                transparent=False)
     plt.close()
