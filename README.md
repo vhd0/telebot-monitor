@@ -3,18 +3,18 @@
 # 🚦 Render Service Status
 
 <!--badge-start-->
-![Uptime](https://img.shields.io/badge/uptime-Online-brightgreen)
+![Uptime](https://img.shields.io/badge/uptime-Offline-red)
 <!--badge-end-->
 
 **Monitoring:** `telegram-template-bot.onrender.com`
 
 | Metric | Value |
 |:--|:--|
-| ⏰ Last Update | 2025-07-08 19:12:00 UTC |
+| ⏰ Last Update | 2025-07-08 19:37:01 UTC |
 | 🔄 Total Pings | 30 |
-| ✅ Uptime (30 lần gần nhất) | 50.00% |
+| ✅ Uptime (30 lần gần nhất) | 43.33% |
 | ⌛ Ping Interval | 30 phút |
-| 📡 Last Check | 2025-07-08 19:11:58 | ✅ Success  |
+| 📡 Last Check | |
 
 </div>
 
@@ -36,10 +36,6 @@
 <!--ping-log-start-->
 | Thời gian | Trạng thái | Chi tiết |
 |---|---|---|
-| 2025-07-08 11:13:37 | ✅ Success | 200 OK (Phản hồi: 361ms) |
-| 2025-07-08 11:38:18 | ✅ Success | 200 OK (Phản hồi: 357ms) |
-| 2025-07-08 12:31:32 | ✅ Success | Service Unavailable (Render đang khởi động lại) (Thử lại 1/5), đợi 8s...
-Service Unavailable (Render đang khởi động lại) (Thử lại 2/5), đợi 11s...
 Service Unavailable (Render đang khởi động lại) (Thử lại 3/5), đợi 17s...
 200 OK (Khởi động thành công sau 4 lần thử, phản hồi: 38637ms) |
 | 2025-07-08 13:30:33 | ✅ Success | 200 OK (Phản hồi: 334ms) |
@@ -66,6 +62,10 @@ Service Unavailable (Render đang khởi động lại) (Thử lại 3/5), đợ
 | 2025-07-08 18:20:49 | ✅ Success | 200 OK (Phản hồi: 390ms) |
 | 2025-07-08 18:50:26 | ✅ Success | 200 OK (Phản hồi: 362ms) |
 | 2025-07-08 19:11:58 | ✅ Success | 200 OK (Phản hồi: 320ms) |
+| 2025-07-08 19:36:58 | ✅ Success | Service Unavailable (Render đang khởi động lại) (Thử lại 1/5), đợi 8s...
+Service Unavailable (Render đang khởi động lại) (Thử lại 2/5), đợi 11s...
+Service Unavailable (Render đang khởi động lại) (Thử lại 3/5), đợi 17s...
+200 OK (Khởi động thành công sau 4 lần thử, phản hồi: 37326ms) |
 <!--ping-log-end-->
 
 </details>
