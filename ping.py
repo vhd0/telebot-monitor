@@ -23,8 +23,18 @@ def get_random_referrer():
     ]
     return random.choice(referrers)
 
-def get_session_id():
-    return str(uuid.uuid4())
+def format_error_message(status_code, error_text=""):
+    error_messages = {
+        503: "Service Unavailable (Render đang khởi động lại)",
+        429: "Too Many Requests (Rate limit)",
+        500: "Internal Server Error",
+        502: "Bad Gateway",
+        504: "Gateway Timeout"
+    }
+    base_message = error_messages.get(status_code, f"HTTP {status_code}")
+    if error_text:
+        return f"{base_message} - {error_text}"
+    return base_message
 
 def ping_endpoint():
     base_url = "https://telegram-template-bot.onrender.com/health"
@@ -32,7 +42,7 @@ def ping_endpoint():
     params = {
         't': int(time.time()),
         '_': int(time.time() * 1000),
-        'sid': get_session_id(),
+        'sid': str(uuid.uuid4()),
         'v': '1.0',
         'r': random.randint(1000000, 9999999)
     }
@@ -43,7 +53,8 @@ def ping_endpoint():
         'Accept-Language': 'en-US,en;q=0.9,vi;q=0.8',
         'Accept-Encoding': 'gzip, deflate, br',
         'Connection': 'keep-alive',
-        'Cache-Control': 'max-age=0',
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
         'Sec-Ch-Ua': '"Not_A Brand";v="8", "Chromium";v="120"',
         'Sec-Ch-Ua-Mobile': '?0',
         'Sec-Ch-Ua-Platform': '"Windows"',
@@ -65,7 +76,7 @@ def ping_endpoint():
         with requests.Session() as session:
             start_time = time.time()
             
-            for attempt in range(3):
+            for attempt in range(3):  # 3 lần thử
                 try:
                     response = session.get(
                         base_url,
@@ -80,23 +91,60 @@ def ping_endpoint():
                     if response.status_code == 200:
                         print(f"200 OK (Phản hồi: {response_time}ms)")
                         return True
-                    elif response.status_code == 429:
+                    
+                    # Xử lý các lỗi cụ thể
+                    elif response.status_code == 503:
+                        error_msg = format_error_message(503)
+                        # Đối với 503, thử lại sau 5-10 giây
                         if attempt < 2:
-                            time.sleep(random.uniform(2, 5))
+                            wait_time = random.uniform(5, 10)
+                            print(f"{error_msg}, đợi {round(wait_time)}s và thử lại...")
+                            time.sleep(wait_time)
                             continue
-                        print(f"Lỗi 429: Too Many Requests")
+                        print(error_msg)
                         return False
+                    
+                    elif response.status_code == 429:
+                        error_msg = format_error_message(429)
+                        if attempt < 2:
+                            wait_time = random.uniform(3, 7)
+                            print(f"{error_msg}, đợi {round(wait_time)}s và thử lại...")
+                            time.sleep(wait_time)
+                            continue
+                        print(error_msg)
+                        return False
+                    
                     else:
-                        print(f"Lỗi {response.status_code}")
+                        error_msg = format_error_message(response.status_code)
+                        if attempt < 2:
+                            wait_time = random.uniform(2, 5)
+                            print(f"{error_msg}, đợi {round(wait_time)}s và thử lại...")
+                            time.sleep(wait_time)
+                            continue
+                        print(error_msg)
                         return False
                         
                 except requests.exceptions.Timeout:
                     if attempt < 2:
+                        wait_time = random.uniform(2, 5)
+                        print(f"Timeout, đợi {round(wait_time)}s và thử lại...")
+                        time.sleep(wait_time)
                         continue
                     print("Timeout sau 30s")
                     return False
+                except requests.exceptions.ConnectionError as e:
+                    if attempt < 2:
+                        wait_time = random.uniform(2, 5)
+                        print(f"Lỗi kết nối, đợi {round(wait_time)}s và thử lại...")
+                        time.sleep(wait_time)
+                        continue
+                    print(f"Lỗi kết nối: {str(e)}")
+                    return False
                 except Exception as e:
                     if attempt < 2:
+                        wait_time = random.uniform(2, 5)
+                        print(f"Lỗi không xác định, đợi {round(wait_time)}s và thử lại...")
+                        time.sleep(wait_time)
                         continue
                     print(f"Lỗi: {str(e)}")
                     return False
