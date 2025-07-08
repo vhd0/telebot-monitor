@@ -10,9 +10,9 @@
 
 | Metric | Value |
 |:--|:--|
-| ⏰ Last Update | 2025-07-08 23:15:01 UTC |
+| ⏰ Last Update | 2025-07-08 23:39:54 UTC |
 | 🔄 Total Pings | 30 |
-| ✅ Uptime (30 lần gần nhất) | 36.67% |
+| ✅ Uptime (30 lần gần nhất) | 30.00% |
 | ⌛ Ping Interval | 30 phút |
 | 📡 Last Check | |
 
@@ -36,10 +36,6 @@
 <!--ping-log-start-->
 | Thời gian | Trạng thái | Chi tiết |
 |---|---|---|
-200 OK (Khởi động thành công sau 4 lần thử, phản hồi: 39507ms) |
-| 2025-07-08 18:20:49 | ✅ Success | 200 OK (Phản hồi: 390ms) |
-| 2025-07-08 18:50:26 | ✅ Success | 200 OK (Phản hồi: 362ms) |
-| 2025-07-08 19:11:58 | ✅ Success | 200 OK (Phản hồi: 320ms) |
 | 2025-07-08 19:36:58 | ✅ Success | Service Unavailable (Render đang khởi động lại) (Thử lại 1/5), đợi 8s...
 Service Unavailable (Render đang khởi động lại) (Thử lại 2/5), đợi 11s...
 Service Unavailable (Render đang khởi động lại) (Thử lại 3/5), đợi 17s...
@@ -66,6 +62,10 @@ Service Unavailable (Render đang khởi động lại) (Thử lại 3/5), đợ
 Service Unavailable (Render đang khởi động lại) (Thử lại 2/5), đợi 11s...
 Service Unavailable (Render đang khởi động lại) (Thử lại 3/5), đợi 17s...
 200 OK (Khởi động thành công sau 4 lần thử, phản hồi: 37377ms) |
+| 2025-07-08 23:39:48 | ✅ Success | Service Unavailable (Render đang khởi động lại) (Thử lại 1/5), đợi 8s...
+Service Unavailable (Render đang khởi động lại) (Thử lại 2/5), đợi 11s...
+Service Unavailable (Render đang khởi động lại) (Thử lại 3/5), đợi 17s...
+200 OK (Khởi động thành công sau 4 lần thử, phản hồi: 39812ms) |
 <!--ping-log-end-->
 
 </details>
