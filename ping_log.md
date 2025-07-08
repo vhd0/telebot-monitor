@@ -1,10 +1,6 @@
 | Thời gian | Trạng thái | Chi tiết |
 |---|---|---|
 ⏰ Timeout sau 90s |
-| 2025-07-07 16:19:11 | ❌ Fail | Lỗi 429
-⏰ Timeout sau 90s |
-| 2025-07-07 16:48:22 | ❌ Fail | Lỗi 429
-⏰ Timeout sau 90s |
 | 2025-07-07 17:13:41 | ❌ Fail | Lỗi 429
 ⏰ Timeout sau 90s |
 | 2025-07-07 17:42:49 | ❌ Fail | Lỗi 429
@@ -29,4 +25,8 @@
 | 2025-07-08 07:15:59 | ❌ Fail | Lỗi 503
 ⏰ Timeout sau 90s |
 | 2025-07-08 07:40:24 | ❌ Fail | Lỗi 503
+⏰ Timeout sau 90s |
+| 2025-07-08 08:13:32 | ❌ Fail | Service Unavailable (Render đang khởi động lại), đợi 7s và thử lại...
+Service Unavailable (Render đang khởi động lại), đợi 6s và thử lại...
+Service Unavailable (Render đang khởi động lại)
 ⏰ Timeout sau 90s |
