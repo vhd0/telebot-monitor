@@ -19,6 +19,9 @@ if times:
     x = np.arange(len(times))
     y = np.array(statuses)
 
+    # Thiết lập style cho matplotlib
+    plt.style.use('seaborn-v0_8-darkgrid')
+    
     fig, ax = plt.subplots(figsize=(14, 4))
 
     # Bar colors
@@ -44,10 +47,10 @@ if times:
     for s, e in streaks:
         count = e - s + 1
         if count > 0:
-            downtime_mins = count * 30  # 30 phút một lần ping
+            downtime_mins = count * 30
             x_mid = (s + e) / 2
             ax.annotate(
-                f"{downtime_mins} phút downtime\n({count}x fail)",
+                f"{downtime_mins} mins downtime\n({count} fails)",
                 xy=(x_mid, 0.1), xycoords='data',
                 xytext=(0, 28), textcoords='offset points',
                 ha='center', va='bottom',
@@ -66,7 +69,7 @@ if times:
     # Axes and ticks
     ax.set_ylim(-0.1, 1.1)
     ax.set_yticks([0, 1])
-    ax.set_yticklabels(['❌ Down', '✅ Up'], fontsize=12, weight='bold')
+    ax.set_yticklabels(['DOWN', 'UP'], fontsize=12, weight='bold')
     xtickstep = max(1, len(x)//10)
     ax.set_xticks(x[::xtickstep])
     ax.set_xticklabels([times[i] for i in range(0, len(times), xtickstep)], 
@@ -78,7 +81,7 @@ if times:
     ax.legend(handles=[green_patch, red_patch], loc='upper left', fontsize=11, frameon=True)
 
     # Title
-    ax.set_title('⏱️ Uptime/Downtime Monitor (30 min/ping)', 
+    ax.set_title('Uptime/Downtime Monitor (30min interval)', 
                 fontsize=16, weight='bold', pad=14, color='#222')
 
     # Optimize UI
@@ -87,6 +90,13 @@ if times:
     ax.spines['left'].set_linewidth(1.1)
     ax.spines['bottom'].set_linewidth(1.1)
 
+    # Set DPI and figure size
     plt.tight_layout(pad=1.5)
-    plt.savefig('uptime_chart.png', dpi=140, bbox_inches='tight', transparent=False)
+    
+    # Save with specific font configuration
+    plt.rcParams['font.family'] = 'DejaVu Sans'
+    plt.savefig('uptime_chart.png', 
+                dpi=140, 
+                bbox_inches='tight', 
+                transparent=False)
     plt.close()
