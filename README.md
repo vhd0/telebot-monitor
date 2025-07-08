@@ -10,11 +10,11 @@
 
 | Metric | Value |
 |:--|:--|
-| ⏰ Last Update | 2025-07-08 09:42:42 UTC |
+| ⏰ Last Update | 2025-07-08 10:16:26 UTC |
 | 🔄 Total Pings | 30 |
-| ✅ Uptime (30 lần gần nhất) | 40.00% |
+| ✅ Uptime (30 lần gần nhất) | 43.33% |
 | ⌛ Ping Interval | 30 phút |
-| 📡 Last Check | 2025-07-08 09:42:40 | ✅ Success  |
+| 📡 Last Check | 2025-07-08 10:16:24 | ✅ Success  |
 
 </div>
 
@@ -36,7 +36,6 @@
 <!--ping-log-start-->
 | Thời gian | Trạng thái | Chi tiết |
 |---|---|---|
-| 2025-07-07 18:20:30 | ❌ Fail | Lỗi 429
 ⏰ Timeout sau 90s |
 | 2025-07-07 18:49:33 | ❌ Fail | Lỗi 429
 ⏰ Timeout sau 90s |
@@ -66,6 +65,7 @@ Service Unavailable (Render đang khởi động lại)
 | 2025-07-08 08:48:51 | ✅ Success | 200 OK (Phản hồi: 336ms) |
 | 2025-07-08 09:17:21 | ✅ Success | 200 OK (Phản hồi: 297ms) |
 | 2025-07-08 09:42:40 | ✅ Success | 200 OK (Phản hồi: 788ms) |
+| 2025-07-08 10:16:24 | ✅ Success | 200 OK (Phản hồi: 382ms) |
 <!--ping-log-end-->
 
 </details>
