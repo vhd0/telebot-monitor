@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
 import re
+import sys
 
 # Khởi tạo lists trước khi đọc file
 times = []
@@ -10,13 +11,18 @@ statuses = []
 try:
     with open('log_for_chart.txt', encoding='utf-8') as f:
         lines = f.readlines()
-
+        
         # Xử lý từng dòng để lấy thời gian và trạng thái
         for line in lines:
             match = re.match(r'\|\s*(.*?)\s*\|\s*(.*?)\s*\|', line)
             if match:
                 times.append(match.group(1))
-                statuses.append(1 if '✅' in match.group(2) else 0)
+                # Kiểm tra kết quả cuối cùng của ping
+                if ('200 OK' in line and 
+                    ('Khởi động thành công' in line or 'Phản hồi' in line)):
+                    statuses.append(1)  # Success
+                else:
+                    statuses.append(0)  # Fail
 
     # Chỉ vẽ chart nếu có dữ liệu
     if len(times) > 0:
