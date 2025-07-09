@@ -1,7 +1,5 @@
 | Thời gian | Trạng thái | Chi tiết |
 |---|---|---|
-Service Unavailable (Render đang khởi động lại) (Thử lại 3/5), đợi 17s...
-200 OK (Khởi động thành công sau 4 lần thử, phản hồi: 38046ms) |
 | 2025-07-09 03:27:00 | ✅ Success | 200 OK (Phản hồi: 465ms) |
 | 2025-07-09 04:05:28 | ✅ Success | 200 OK (Phản hồi: 296ms) |
 | 2025-07-09 04:54:37 | ✅ Success | 200 OK (Phản hồi: 343ms) |
@@ -30,3 +28,5 @@ Timeout/Connection Error (Thử lại 2/5), đợi 8s...
 | 2025-07-09 14:44:12 | ✅ Success | 200 OK (Phản hồi: 318ms) |
 | 2025-07-09 15:16:15 | ✅ Success | 200 OK (Phản hồi: 363ms) |
 | 2025-07-09 15:43:02 | ✅ Success | 200 OK (Phản hồi: 279ms) |
+| 2025-07-09 16:16:10 | ✅ Success | Timeout/Connection Error (Thử lại 1/5), đợi 5s...
+200 OK (Khởi động thành công sau 2 lần thử, phản hồi: 42409ms) |
