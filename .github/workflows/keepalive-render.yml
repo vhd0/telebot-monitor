@@ -35,7 +35,12 @@ jobs:
           fi
           
           PING_OUTPUT=$(timeout 90s python ping.py 2>&1 || echo "⏰ Timeout sau 90s")
-          STATUS=$(echo "$PING_OUTPUT" | grep -q "200 OK" && echo "✅ Success" || echo "❌ Fail")
+          # Kiểm tra kết quả cuối cùng của ping, bao gồm cả retry thành công
+          if echo "$PING_OUTPUT" | grep -q "200 OK.*Khởi động thành công" || echo "$PING_OUTPUT" | grep -q "200 OK.*Phản hồi"; then
+            STATUS="✅ Success"
+          else
+            STATUS="❌ Fail"
+          fi
           
           echo "| $(date -u '+%Y-%m-%d %H:%M:%S') | $STATUS | $PING_OUTPUT |" >> ping_log.md
           
@@ -55,15 +60,23 @@ jobs:
           if [ "$TOTAL" -eq 0 ]; then
             UPTIME_PERCENT=0
           else
-            SUCCESS=$(grep -c "✅" log_for_chart.txt)
+            # Tính success bao gồm cả trường hợp retry thành công
+            SUCCESS=$(grep -E "✅.*200 OK" log_for_chart.txt | wc -l)
             UPTIME_PERCENT=$(awk "BEGIN {printf \"%.2f\", ($SUCCESS/$TOTAL)*100}")
           fi
           echo "$UPTIME_PERCENT" > uptime_percent.txt
 
       - name: 🟢 Tạo badge
         run: |
-          LAST_STATUS=$(tail -n 1 ping_log.md | grep -q "✅" && echo "Online" || echo "Offline")
-          COLOR=$([ "$LAST_STATUS" = "Online" ] && echo "brightgreen" || echo "red")
+          # Kiểm tra status dựa trên kết quả cuối cùng của ping
+          LAST_LINE=$(tail -n 1 ping_log.md)
+          if echo "$LAST_LINE" | grep -q "✅.*200 OK.*Khởi động thành công" || echo "$LAST_LINE" | grep -q "✅.*200 OK.*Phản hồi"; then
+            LAST_STATUS="Online"
+            COLOR="brightgreen"
+          else
+            LAST_STATUS="Offline"
+            COLOR="red"
+          fi
           echo "![Uptime](https://img.shields.io/badge/uptime-$LAST_STATUS-$COLOR)" > uptime_badge.md
 
       - name: 🔄 Cập nhật README
