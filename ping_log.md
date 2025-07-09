@@ -9,3 +9,5 @@ Service Unavailable (Render đang khởi động lại) (Thử lại 3/5), đợ
 | 2025-07-09 03:27:00 | ✅ Success | 200 OK (Phản hồi: 465ms) |
 | 2025-07-09 04:05:28 | ✅ Success | 200 OK (Phản hồi: 296ms) |
 | 2025-07-09 04:54:37 | ✅ Success | 200 OK (Phản hồi: 343ms) |
+| 2025-07-09 05:19:53 | ✅ Success | Timeout/Connection Error (Thử lại 1/5), đợi 5s...
+200 OK (Khởi động thành công sau 2 lần thử, phản hồi: 35418ms) |
