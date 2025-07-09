@@ -2,7 +2,7 @@ name: Keep Render Bot Alive
 
 on:
   schedule:
-    - cron: '*/30 * * * *'  # Chạy mỗi 30 phút
+    - cron: '*/30 * * * *'
   workflow_dispatch:
 
 jobs:
@@ -25,78 +25,71 @@ jobs:
       - name: 📦 Cài đặt thư viện
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install -r requirements.txt
 
       - name: 🚀 Ping endpoint
+        id: ping
         run: |
+          # Khởi tạo log file nếu chưa tồn tại
           if [ ! -f ping_log.md ]; then
             echo "| Thời gian | Trạng thái | Chi tiết |" > ping_log.md
             echo "|---|---|---|" >> ping_log.md
           fi
           
-          PING_OUTPUT=$(timeout 90s python ping.py 2>&1 || echo "⏰ Timeout sau 90s")
+          # Thực hiện ping và lưu output
+          TIMESTAMP=$(date -u '+%Y-%m-%d %H:%M:%S')
+          PING_OUTPUT=$(python ping.py 2>&1) || true
           
-          # Kiểm tra kết quả cuối cùng của ping, bao gồm cả retry thành công
-          if echo "$PING_OUTPUT" | grep -q "200 OK.*Khởi động thành công" || echo "$PING_OUTPUT" | grep -q "200 OK.*Phản hồi"; then
+          # Xác định trạng thái từ output
+          if echo "$PING_OUTPUT" | grep -q "200 OK"; then
+            echo "status=success" >> $GITHUB_OUTPUT
             STATUS="✅ Success"
-            # Nếu là khởi động thành công, ghi toàn bộ quá trình retry vào chi tiết
-            if echo "$PING_OUTPUT" | grep -q "200 OK.*Khởi động thành công"; then
-              # Giữ nguyên output để show quá trình retry
-              FINAL_OUTPUT="$PING_OUTPUT"
-            else
-              # Nếu là ping bình thường, chỉ lấy dòng cuối
-              FINAL_OUTPUT=$(echo "$PING_OUTPUT" | grep "200 OK")
-            fi
           else
+            echo "status=fail" >> $GITHUB_OUTPUT
             STATUS="❌ Fail"
-            # Nếu thất bại, chỉ lấy thông báo lỗi cuối cùng
-            FINAL_OUTPUT=$(echo "$PING_OUTPUT" | tail -n 1)
           fi
           
-          # Ghi vào log chỉ một lần cho mỗi lần ping
-          echo "| $(date -u '+%Y-%m-%d %H:%M:%S') | $STATUS | $FINAL_OUTPUT |" >> ping_log.md
+          # Lưu log
+          echo "| $TIMESTAMP | $STATUS | $PING_OUTPUT |" >> ping_log.md
           
+          # Giữ 30 log gần nhất
           if [ $(wc -l < ping_log.md) -gt 32 ]; then
             head -n 2 ping_log.md > ping_log.tmp
             tail -n 30 ping_log.md >> ping_log.tmp
             mv ping_log.tmp ping_log.md
           fi
 
-      - name: 📊 Cập nhật chart và thống kê
+      - name: 📊 Cập nhật thống kê
         run: |
+          # Tạo file ngắn gọn cho README
           (head -n 2 ping_log.md && tail -n 30 ping_log.md) > ping_log_short.md
-          tail -n +3 ping_log.md | tail -n 30 > log_for_chart.txt
-          python plot_uptime.py
-
-          TOTAL=$(wc -l < log_for_chart.txt)
-          if [ "$TOTAL" -eq 0 ]; then
-            UPTIME_PERCENT=0
+          
+          # Tính uptime
+          TOTAL=$(grep -c "[✅❌]" ping_log.md)
+          if [ $TOTAL -eq 0 ]; then
+            echo "0.00" > uptime_percent.txt
           else
-            # Tính success dựa trên status ✅, không quan tâm số lần retry
-            SUCCESS=$(grep -c "✅" log_for_chart.txt)
-            UPTIME_PERCENT=$(awk "BEGIN {printf \"%.2f\", ($SUCCESS/$TOTAL)*100}")
+            SUCCESS=$(grep -c "✅" ping_log.md)
+            awk "BEGIN {printf \"%.2f\", ($SUCCESS/$TOTAL)*100}" > uptime_percent.txt
           fi
-          echo "$UPTIME_PERCENT" > uptime_percent.txt
 
-      - name: 🟢 Tạo badge
+      - name: 🟢 Cập nhật badge
         run: |
-          # Kiểm tra status dựa trên trạng thái ✅/❌ thay vì nội dung
-          LAST_LINE=$(tail -n 1 ping_log.md)
-          if echo "$LAST_LINE" | grep -q "✅"; then
-            LAST_STATUS="Online"
-            COLOR="brightgreen"
+          if [ "${{ steps.ping.outputs.status }}" = "success" ]; then
+            echo "![Uptime](https://img.shields.io/badge/uptime-Online-brightgreen)" > uptime_badge.md
           else
-            LAST_STATUS="Offline"
-            COLOR="red"
+            echo "![Uptime](https://img.shields.io/badge/uptime-Offline-red)" > uptime_badge.md
           fi
-          echo "![Uptime](https://img.shields.io/badge/uptime-$LAST_STATUS-$COLOR)" > uptime_badge.md
+
+      - name: 📈 Vẽ chart
+        run: python plot_uptime.py
 
       - name: 🔄 Cập nhật README
         run: |
           CURRENT_TIME=$(date -u '+%Y-%m-%d %H:%M:%S')
-          TOTAL_PINGS=$(wc -l < log_for_chart.txt)
           UPTIME_PERCENT=$(cat uptime_percent.txt)
           LAST_CHECK=$(tail -n 1 ping_log.md | cut -d'|' -f2,3)
+          TOTAL_PINGS=$(grep -c "[✅❌]" ping_log.md)
 
           {
             echo "<div align=\"center\">"
@@ -147,19 +140,19 @@ jobs:
             echo "<sub>⚡️ Powered by [telebot-monitor](https://github.com/vhd0/telebot-monitor) | 🕒 Cập nhật mỗi 30 phút</sub>"
             echo
             echo "</div>"
-          } > README.md.new
-
-          mv README.md.new README.md
+          } > README.md
 
       - name: 💾 Commit thay đổi
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-
           git add README.md ping_log.md uptime_badge.md uptime_chart.png
-
+          
           if ! git diff --staged --quiet; then
-            git commit -m "🤖 Cập nhật uptime [skip ci]" -m "- Thời gian: $(date -u '+%Y-%m-%d %H:%M:%S') UTC" -m "- Badge & Chart đã cập nhật" -m "- Log mới đã thêm"
+            git commit -m "🤖 Cập nhật uptime [skip ci]" \
+              -m "- Thời gian: $(date -u '+%Y-%m-%d %H:%M:%S') UTC" \
+              -m "- Status: ${{ steps.ping.outputs.status }}" \
+              -m "- Badge & Chart đã cập nhật"
             git pull --rebase origin main
             git push
           fi
