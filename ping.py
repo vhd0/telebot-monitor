@@ -81,7 +81,6 @@ def ping_endpoint():
                     
                     elif response.status_code == 503:
                         if attempt < MAX_ATTEMPTS - 1:
-                            # Tăng thời gian chờ theo cấp số nhân, nhưng không quá MAX_WAIT
                             wait_time = min(wait_time * 1.5, MAX_WAIT)
                             print(f"{format_error_message(503, attempt=attempt, max_attempts=MAX_ATTEMPTS)}, đợi {round(wait_time)}s...")
                             time.sleep(wait_time)
