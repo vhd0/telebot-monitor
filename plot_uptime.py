@@ -17,13 +17,8 @@ try:
             match = re.match(r'\|\s*(.*?)\s*\|\s*(.*?)\s*\|', line)
             if match:
                 times.append(match.group(1))
-                # Kiểm tra kết quả cuối cùng của ping
-                if ('200 OK' in line and 
-                    ('Khởi động thành công' in line or 'Phản hồi' in line)):
-                    statuses.append(1)  # Success
-                else:
-                    statuses.append(0)  # Fail
-
+                # Chỉ quan tâm đến trạng thái ✅/❌, không quan tâm số lần retry
+                statuses.append(1 if '✅' in match.group(2) else 0)
     # Chỉ vẽ chart nếu có dữ liệu
     if len(times) > 0:
         x = np.arange(len(times))
