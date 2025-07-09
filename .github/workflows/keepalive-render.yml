@@ -35,14 +35,26 @@ jobs:
           fi
           
           PING_OUTPUT=$(timeout 90s python ping.py 2>&1 || echo "⏰ Timeout sau 90s")
+          
           # Kiểm tra kết quả cuối cùng của ping, bao gồm cả retry thành công
           if echo "$PING_OUTPUT" | grep -q "200 OK.*Khởi động thành công" || echo "$PING_OUTPUT" | grep -q "200 OK.*Phản hồi"; then
             STATUS="✅ Success"
+            # Nếu là khởi động thành công, ghi toàn bộ quá trình retry vào chi tiết
+            if echo "$PING_OUTPUT" | grep -q "200 OK.*Khởi động thành công"; then
+              # Giữ nguyên output để show quá trình retry
+              FINAL_OUTPUT="$PING_OUTPUT"
+            else
+              # Nếu là ping bình thường, chỉ lấy dòng cuối
+              FINAL_OUTPUT=$(echo "$PING_OUTPUT" | grep "200 OK")
+            fi
           else
             STATUS="❌ Fail"
+            # Nếu thất bại, chỉ lấy thông báo lỗi cuối cùng
+            FINAL_OUTPUT=$(echo "$PING_OUTPUT" | tail -n 1)
           fi
           
-          echo "| $(date -u '+%Y-%m-%d %H:%M:%S') | $STATUS | $PING_OUTPUT |" >> ping_log.md
+          # Ghi vào log chỉ một lần cho mỗi lần ping
+          echo "| $(date -u '+%Y-%m-%d %H:%M:%S') | $STATUS | $FINAL_OUTPUT |" >> ping_log.md
           
           if [ $(wc -l < ping_log.md) -gt 32 ]; then
             head -n 2 ping_log.md > ping_log.tmp
@@ -60,17 +72,17 @@ jobs:
           if [ "$TOTAL" -eq 0 ]; then
             UPTIME_PERCENT=0
           else
-            # Tính success bao gồm cả trường hợp retry thành công
-            SUCCESS=$(grep -E "✅.*200 OK" log_for_chart.txt | wc -l)
+            # Tính success dựa trên status ✅, không quan tâm số lần retry
+            SUCCESS=$(grep -c "✅" log_for_chart.txt)
             UPTIME_PERCENT=$(awk "BEGIN {printf \"%.2f\", ($SUCCESS/$TOTAL)*100}")
           fi
           echo "$UPTIME_PERCENT" > uptime_percent.txt
 
       - name: 🟢 Tạo badge
         run: |
-          # Kiểm tra status dựa trên kết quả cuối cùng của ping
+          # Kiểm tra status dựa trên trạng thái ✅/❌ thay vì nội dung
           LAST_LINE=$(tail -n 1 ping_log.md)
-          if echo "$LAST_LINE" | grep -q "✅.*200 OK.*Khởi động thành công" || echo "$LAST_LINE" | grep -q "✅.*200 OK.*Phản hồi"; then
+          if echo "$LAST_LINE" | grep -q "✅"; then
             LAST_STATUS="Online"
             COLOR="brightgreen"
           else
