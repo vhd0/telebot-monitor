@@ -1,6 +1,5 @@
 | Thời gian | Trạng thái | Chi tiết |
 |---|---|---|
-200 OK (Khởi động thành công sau 2 lần thử, phản hồi: 35364ms) |
 | 2025-07-10 19:36:26 | ✅ Success | 200 OK (Phản hồi: 22642ms) |
 | 2025-07-10 20:16:27 | ✅ Success | 200 OK (Phản hồi: 22865ms) |
 | 2025-07-10 20:42:14 | ✅ Success | 200 OK (Phản hồi: 374ms) |
@@ -30,3 +29,4 @@
 | 2025-07-11 11:13:44 | ✅ Success | 200 OK (Phản hồi: 330ms) |
 | 2025-07-11 11:37:47 | ✅ Success | 200 OK (Phản hồi: 360ms) |
 | 2025-07-11 12:29:39 | ✅ Success | 200 OK (Phản hồi: 410ms) |
+| 2025-07-11 13:09:28 | ✅ Success | 200 OK (Phản hồi: 388ms) |
