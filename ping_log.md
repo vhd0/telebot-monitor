@@ -1,6 +1,5 @@
 | Thời gian | Trạng thái | Chi tiết |
 |---|---|---|
-| 2025-07-23 10:17:05 | ✅ Success | 200 OK (Phản hồi: 394ms) |
 | 2025-07-23 10:47:39 | ✅ Success | 200 OK (Phản hồi: 818ms) |
 | 2025-07-23 11:14:06 | ✅ Success | 200 OK (Phản hồi: 337ms) |
 | 2025-07-23 11:39:28 | ✅ Success | 200 OK (Phản hồi: 912ms) |
@@ -30,3 +29,4 @@
 | 2025-07-24 01:16:15 | ✅ Success | 200 OK (Phản hồi: 907ms) |
 | 2025-07-24 03:13:55 | ✅ Success | 200 OK (Phản hồi: 296ms) |
 | 2025-07-24 04:12:00 | ✅ Success | 200 OK (Phản hồi: 312ms) |
+| 2025-07-24 05:24:48 | ❌ Fail | Service không khởi động được sau 5 lần thử |
