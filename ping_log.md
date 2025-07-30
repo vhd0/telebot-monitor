@@ -1,7 +1,5 @@
 | Thời gian | Trạng thái | Chi tiết |
 |---|---|---|
-| 2025-07-30 09:49:13 | ❌ Fail | HTTP 502 |
-| 2025-07-30 10:17:34 | ✅ Success | 200 OK (Phản hồi: 427ms) |
 | 2025-07-30 10:47:59 | ✅ Success | 200 OK (Phản hồi: 489ms) |
 | 2025-07-30 11:14:12 | ✅ Success | 200 OK (Phản hồi: 300ms) |
 | 2025-07-30 11:39:20 | ✅ Success | 200 OK (Phản hồi: 290ms) |
@@ -30,3 +28,5 @@
 200 OK (Khởi động thành công sau 2 lần thử, phản hồi: 35371ms) |
 | 2025-07-30 23:15:23 | ✅ Success | Timeout/Connection Error (Thử lại 1/5), đợi 5s...
 200 OK (Khởi động thành công sau 2 lần thử, phản hồi: 35453ms) |
+| 2025-07-30 23:42:01 | ✅ Success | Timeout/Connection Error (Thử lại 1/5), đợi 5s...
+200 OK (Khởi động thành công sau 2 lần thử, phản hồi: 35660ms) |
