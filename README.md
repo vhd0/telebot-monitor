@@ -10,11 +10,11 @@
 
 | Metric | Value |
 |:--|:--|
-| ⏰ Last Update | 2025-10-14 23:35:10 UTC |
-| 🔄 Total Pings | 27 |
+| ⏰ Last Update | 2025-10-15 01:07:00 UTC |
+| 🔄 Total Pings | 26 |
 | ✅ Uptime (30 lần gần nhất) | 100.00% |
 | ⌛ Ping Interval | 30 phút |
-| 📡 Last Check | 2025-10-14 23:34:45 | ✅ Success  |
+| 📡 Last Check | |
 
 </div>
 
@@ -36,8 +36,6 @@
 <!--ping-log-start-->
 | Thời gian | Trạng thái | Chi tiết |
 |---|---|---|
-| 2025-10-14 09:40:20 | ✅ Success | 200 OK (Phản hồi: 250ms) |
-| 2025-10-14 10:15:43 | ✅ Success | Timeout/Connection Error (Thử lại 1/5), đợi 5s...
 200 OK (Khởi động thành công sau 2 lần thử, phản hồi: 35757ms) |
 | 2025-10-14 10:42:04 | ✅ Success | 200 OK (Phản hồi: 866ms) |
 | 2025-10-14 11:11:51 | ✅ Success | 200 OK (Phản hồi: 335ms) |
@@ -66,6 +64,8 @@
 | 2025-10-14 22:38:24 | ✅ Success | 200 OK (Phản hồi: 22513ms) |
 | 2025-10-14 23:12:39 | ✅ Success | 200 OK (Phản hồi: 22814ms) |
 | 2025-10-14 23:34:45 | ✅ Success | 200 OK (Phản hồi: 22928ms) |
+| 2025-10-15 01:06:24 | ✅ Success | Timeout/Connection Error (Thử lại 1/5), đợi 5s...
+200 OK (Khởi động thành công sau 2 lần thử, phản hồi: 35429ms) |
 <!--ping-log-end-->
 
 </details>
