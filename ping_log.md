@@ -1,6 +1,5 @@
 | Thời gian | Trạng thái | Chi tiết |
 |---|---|---|
-200 OK (Khởi động thành công sau 2 lần thử, phản hồi: 62712ms) |
 | 2025-12-26 04:52:20 | ✅ Success | Timeout/Connection Error (Thử lại 1/5), đợi 5s...
 Timeout/Connection Error (Thử lại 2/5), đợi 8s...
 200 OK (Khởi động thành công sau 3 lần thử, phản hồi: 83056ms) |
@@ -30,3 +29,4 @@ Timeout/Connection Error (Thử lại 2/5), đợi 8s...
 | 2025-12-26 15:15:47 | ✅ Success | 200 OK (Phản hồi: 462ms) |
 | 2025-12-26 15:40:57 | ✅ Success | 200 OK (Phản hồi: 801ms) |
 | 2025-12-26 16:18:06 | ✅ Success | 200 OK (Phản hồi: 273ms) |
+| 2025-12-26 16:44:54 | ✅ Success | 200 OK (Phản hồi: 354ms) |
