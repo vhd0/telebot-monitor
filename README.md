@@ -10,8 +10,8 @@
 
 | Metric | Value |
 |:--|:--|
-| ⏰ Last Update | 2026-02-11 22:29:21 UTC |
-| 🔄 Total Pings | 13 |
+| ⏰ Last Update | 2026-02-11 23:01:49 UTC |
+| 🔄 Total Pings | 12 |
 | ✅ Uptime (30 lần gần nhất) | 100.00% |
 | ⌛ Ping Interval | 30 phút |
 | 📡 Last Check | |
@@ -36,10 +36,6 @@
 <!--ping-log-start-->
 | Thời gian | Trạng thái | Chi tiết |
 |---|---|---|
-| 2026-02-11 06:37:49 | ✅ Success | Timeout/Connection Error (Thử lại 1/5), đợi 5s...
-200 OK (Khởi động thành công sau 2 lần thử, phản hồi: 43436ms) |
-| 2026-02-11 07:51:45 | ✅ Success | Timeout/Connection Error (Thử lại 1/5), đợi 5s...
-200 OK (Khởi động thành công sau 2 lần thử, phản hồi: 35908ms) |
 | 2026-02-11 10:43:06 | ✅ Success | Timeout/Connection Error (Thử lại 1/5), đợi 5s...
 200 OK (Khởi động thành công sau 2 lần thử, phản hồi: 44504ms) |
 | 2026-02-11 11:40:18 | ✅ Success | Timeout/Connection Error (Thử lại 1/5), đợi 5s...
@@ -66,6 +62,10 @@ Timeout/Connection Error (Thử lại 2/5), đợi 8s...
 200 OK (Khởi động thành công sau 3 lần thử, phản hồi: 73026ms) |
 | 2026-02-11 22:28:43 | ✅ Success | Timeout/Connection Error (Thử lại 1/5), đợi 5s...
 200 OK (Khởi động thành công sau 2 lần thử, phản hồi: 35706ms) |
+| 2026-02-11 23:00:10 | ✅ Success | Service Unavailable (Render đang khởi động lại) (Thử lại 1/5), đợi 5s...
+Timeout/Connection Error (Thử lại 2/5), đợi 8s...
+Timeout/Connection Error (Thử lại 3/5), đợi 11s...
+200 OK (Khởi động thành công sau 4 lần thử, phản hồi: 95052ms) |
 <!--ping-log-end-->
 
 </details>
