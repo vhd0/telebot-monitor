@@ -10,8 +10,8 @@
 
 | Metric | Value |
 |:--|:--|
-| ⏰ Last Update | 2026-05-18 05:43:14 UTC |
-| 🔄 Total Pings | 17 |
+| ⏰ Last Update | 2026-05-18 09:52:25 UTC |
+| 🔄 Total Pings | 16 |
 | ✅ Uptime (30 lần gần nhất) | 100.00% |
 | ⌛ Ping Interval | 30 phút |
 | 📡 Last Check | |
@@ -36,10 +36,6 @@
 <!--ping-log-start-->
 | Thời gian | Trạng thái | Chi tiết |
 |---|---|---|
-| 2026-05-17 02:35:44 | ✅ Success | Timeout/Connection Error (Thử lại 1/5), đợi 5s...
-200 OK (Khởi động thành công sau 2 lần thử, phản hồi: 35359ms) |
-| 2026-05-17 06:17:18 | ✅ Success | Timeout/Connection Error (Thử lại 1/5), đợi 5s...
-200 OK (Khởi động thành công sau 2 lần thử, phản hồi: 35439ms) |
 | 2026-05-17 08:35:58 | ✅ Success | Timeout/Connection Error (Thử lại 1/5), đợi 5s...
 200 OK (Khởi động thành công sau 2 lần thử, phản hồi: 35382ms) |
 | 2026-05-17 10:19:13 | ✅ Success | Timeout/Connection Error (Thử lại 1/5), đợi 5s...
@@ -66,6 +62,10 @@
 200 OK (Khởi động thành công sau 2 lần thử, phản hồi: 35335ms) |
 | 2026-05-18 05:42:34 | ✅ Success | Timeout/Connection Error (Thử lại 1/5), đợi 5s...
 200 OK (Khởi động thành công sau 2 lần thử, phản hồi: 35886ms) |
+| 2026-05-18 09:50:29 | ✅ Success | Timeout/Connection Error (Thử lại 1/5), đợi 5s...
+Timeout/Connection Error (Thử lại 2/5), đợi 8s...
+Timeout/Connection Error (Thử lại 3/5), đợi 11s...
+200 OK (Khởi động thành công sau 4 lần thử, phản hồi: 114552ms) |
 <!--ping-log-end-->
 
 </details>
